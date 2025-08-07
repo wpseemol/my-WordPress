@@ -5,6 +5,7 @@
 !.gitignore
 !docker-compose.yml
 !.vscode/
+!.env.dev.example
 !wp
 
 
