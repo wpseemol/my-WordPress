@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# But not these files/folders:
+!.gitignore
+!docker-compose.yml
+!.vscode/
+!wp
+
+

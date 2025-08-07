@@ -1,0 +1,50 @@
+services:
+  composer:
+    image: composer
+    container_name: learn_wp_plugin_composer
+    command: ["composer", "update"]
+    volumes: 
+      - ./wp:/app
+    networks:
+      - devNetwork
+
+  mysql:
+    image: mysql:8.0
+    container_name: learn_wp_plugin_mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    env_file:
+      - .env.dev
+    networks:
+      - devNetwork
+  
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: learn_wp_plugin_phpmyadmin
+    ports:
+      - "8183:80"
+    env_file:
+      - .env.dev
+    depends_on:
+      - mysql
+    networks:
+      - devNetwork
+  
+  wordpress:
+    depends_on:
+      - mysql
+      - composer
+    image: wordpress:latest
+    container_name: learn_wp_plugin_wordpress
+    ports:
+      - "8080:80"
+    env_file:
+      - .env.dev
+    volumes:
+      - ./wp:/var/www/html
+    networks:
+      - devNetwork
+
+networks:
+  devNetwork:
+    driver: bridge
